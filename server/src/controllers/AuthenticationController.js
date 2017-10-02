@@ -10,7 +10,7 @@ module.exports = {
       })
     } catch (err) {
       res.status(400).send({
-        error: 'This email addres is already registered.'
+        error: 'This email address is already registered.'
       })
     }
   }
