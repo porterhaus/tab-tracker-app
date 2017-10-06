@@ -1,26 +1,29 @@
 <template>
-  <div>
-    <h1>Register</h1>
-
-    <input 
-        type="email"
-        name="email"
-        v-model="email"
-        placeholder="email" />
-    <br>
-    <input 
-        type="password"
-        name="password"
-        v-model="password"
-        placeholder="password" />
-    <br>
-    <div class="error" v-html="error" />
-    <button
-      @click="register">
-      Register
-    </button>
-
-  </div>
+  <v-layout column>
+    <v-flex xs6 offset-xs3>
+      <panel title="Register">
+        <form 
+          name="tab-tracker-form"
+          autocomplete="off"
+        >
+          <v-text-field
+            label="Email"
+            v-model="email"></v-text-field>
+          <v-text-field
+            label="Password"
+            type="password"
+            v-model="password"
+            autocomplete="new-password"
+          ></v-text-field>
+        </form>
+        <div class="danger-alert" v-html="error"></div><br>
+        <v-btn
+          large
+          @click="register"
+        >Submit</v-btn>
+      </panel>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -40,7 +43,12 @@ export default {
           email: this.email,
           password: this.password
         })
-        console.log(response)
+        if (response.status === 200) {
+          console.log(response)
+          this.email = ''
+          this.password = ''
+          this.error = 'Account created successfully.'
+        }
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -49,9 +57,4 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.error {
-  color: red
-}
-</style>
+<style scoped></style>
